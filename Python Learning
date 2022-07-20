@@ -1,3 +1,0 @@
-var = "chris"
-var1 = 3990
-print (str(var1) + var)
