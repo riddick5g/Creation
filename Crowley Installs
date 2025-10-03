@@ -7,3 +7,8 @@ Repair-WinGetPackageManager -AllUsers
 Write-Host "Done."
 
 winget install vscode
+winget install rustdesk
+winget install notepad++
+winget install Docker.DockerDesktop
+winget install OpenAudible.OpenAudible 
+winget install Python.Python.3.12
