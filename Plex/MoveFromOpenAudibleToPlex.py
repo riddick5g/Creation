@@ -15,13 +15,13 @@ from datetime import datetime
 # ============================================
 
 # Source folder containing M4B audiobook files
-M4B_SOURCE_FOLDER = "example_path"
+M4B_SOURCE_FOLDER = r"example_path"
 
 # Source folder containing album art (JPEG/JPG/PNG files)
-ALBUM_ART_SOURCE_FOLDER = "example_path"
+ALBUM_ART_SOURCE_FOLDER = r"example_path"
 
 # Destination folder where organized audiobooks will be placed
-DESTINATION_FOLDER = "example_path"
+DESTINATION_FOLDER = r"example_path"
 
 # Log file name (will append, not create timestamped files)
 LOG_FILENAME = "openaudible_organizer.log"

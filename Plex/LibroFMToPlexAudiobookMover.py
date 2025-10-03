@@ -11,8 +11,8 @@ from datetime import datetime
 
 # ============ CONFIGURATION ============
 # Change these paths to match your setup
-SOURCE_FOLDER = "C:\Users\chris\Downloads"  # Where Libro.fm downloads go
-PLEX_DESTINATION = "D:\Plexy"  # Your Plex audiobooks folder
+SOURCE_FOLDER = r"C:\Users\chris\Downloads"  # Where Libro.fm downloads go
+PLEX_DESTINATION = r"D:\Plexy"  # Your Plex audiobooks folder
 LOG_FILENAME = "librofm_mover.log"  # Log file name
 # =======================================
 

@@ -1,0 +1,88 @@
+REM ============================================
+REM Batch Wrappers for Audiobook Python Scripts
+REM ============================================
+REM Save each section below as a separate .bat file
+REM These wrappers make it easier to run and schedule your Python scripts
+
+REM ============================================
+REM FILE: run_librofm_mover.bat
+REM ============================================
+@echo off
+echo ========================================
+echo LibroFM Audiobook Mover
+echo ========================================
+echo.
+
+REM Change to the directory where your script is located
+cd /d "C:\path\to\your\scripts"
+
+REM Run the Python script
+python librofm_move.py
+
+REM Pause to see any errors (remove this line for scheduled tasks)
+pause
+
+
+REM ============================================
+REM FILE: run_cover_art_downloader.bat
+REM ============================================
+@echo off
+echo ========================================
+echo Audiobook Cover Art Downloader
+echo ========================================
+echo.
+
+REM Change to the directory where your script is located
+cd /d "C:\path\to\your\scripts"
+
+REM Run the Python script
+python cover_art_downloader.py
+
+REM Pause to see any errors (remove this line for scheduled tasks)
+pause
+
+
+REM ============================================
+REM FILE: run_openaudible_organizer.bat
+REM ============================================
+@echo off
+echo ========================================
+echo OpenAudible Audiobook Organizer
+echo ========================================
+echo.
+
+REM Change to the directory where your script is located
+cd /d "C:\path\to\your\scripts"
+
+REM Run the Python script
+python openaudible_organizer.py
+
+REM Pause to see any errors (remove this line for scheduled tasks)
+pause
+
+
+REM ============================================
+REM ADVANCED: Wrapper with error logging
+REM FILE: run_openaudible_organizer_advanced.bat
+REM ============================================
+@echo off
+echo ========================================
+echo OpenAudible Audiobook Organizer
+echo ========================================
+echo.
+
+REM Change to the directory where your script is located
+cd /d "C:\path\to\your\scripts"
+
+REM Run the Python script and capture output to a separate log
+python openaudible_organizer.py >> scheduler_output.log 2>&1
+
+REM Check if the script succeeded
+if %ERRORLEVEL% EQU 0 (
+    echo Script completed successfully
+) else (
+    echo Script failed with error code %ERRORLEVEL%
+)
+
+REM Pause to see any errors (remove this line for scheduled tasks)
+pause

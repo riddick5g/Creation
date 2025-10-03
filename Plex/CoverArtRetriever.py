@@ -12,7 +12,7 @@ from datetime import datetime
 from urllib.parse import quote
 
 # ============ CONFIGURATION ============
-PLEX_AUDIOBOOKS_FOLDER = "D:\Plexy"  # Your Plex audiobooks folder
+PLEX_AUDIOBOOKS_FOLDER = r"D:\Plexy"  # Your Plex audiobooks folder
 COVER_FILENAME = "cover.jpg"  # What to name the cover art file
 LOG_FILENAME = "cover_art_download.log"  # Log file name
 # =======================================
