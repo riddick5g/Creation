@@ -12,3 +12,5 @@ winget install notepad++
 winget install Docker.DockerDesktop
 winget install OpenAudible.OpenAudible 
 winget install Python.Python.3.12
+
+pip install requests #for the plex management scripts
