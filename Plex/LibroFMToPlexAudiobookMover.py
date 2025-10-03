@@ -7,20 +7,34 @@ Moves .m4b files from download folder to Plex, creating individual folders for e
 import os
 import shutil
 from pathlib import Path
+from datetime import datetime
 
 # ============ CONFIGURATION ============
 # Change these paths to match your setup
 SOURCE_FOLDER = "C:\Users\chris\Downloads"  # Where Libro.fm downloads go
 PLEX_DESTINATION = "D:\Plexy"  # Your Plex audiobooks folder
+LOG_FILENAME = "librofm_mover.log"  # Log file name
 # =======================================
 
-def move_audiobooks(source_dir, dest_dir, dry_run=False):
+def log(message, log_path, print_to_console=True):
+    """Write message to log file and optionally print to console."""
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    log_message = f"[{timestamp}] {message}"
+    
+    if print_to_console:
+        print(message)
+    
+    with open(log_path, 'a', encoding='utf-8') as f:
+        f.write(log_message + "\n")
+
+def move_audiobooks(source_dir, dest_dir, log_path, dry_run=False):
     """
     Move .m4b files from source to destination, creating a folder for each book.
     
     Args:
         source_dir: Path to folder containing downloaded .m4b files
         dest_dir: Path to Plex audiobooks library
+        log_path: Path to log file
         dry_run: If True, only show what would be done without moving files
     """
     source_path = Path(source_dir)
@@ -28,21 +42,22 @@ def move_audiobooks(source_dir, dest_dir, dry_run=False):
     
     # Validate paths
     if not source_path.exists():
-        print(f"❌ Error: Source folder does not exist: {source_dir}")
+        log(f"❌ Error: Source folder does not exist: {source_dir}", log_path)
         return
     
     if not dest_path.exists():
-        print(f"❌ Error: Destination folder does not exist: {dest_dir}")
+        log(f"❌ Error: Destination folder does not exist: {dest_dir}", log_path)
         return
     
     # Find all .m4b files
     m4b_files = list(source_path.glob("*.m4b"))
     
     if not m4b_files:
-        print(f"ℹ️  No .m4b files found in {source_dir}")
+        log(f"ℹ️  No .m4b files found in {source_dir}", log_path)
         return
     
-    print(f"Found {len(m4b_files)} audiobook(s) to process:\n")
+    log(f"Found {len(m4b_files)} audiobook(s) to process:", log_path)
+    log("", log_path)
     
     # Process each file
     for m4b_file in m4b_files:
@@ -53,9 +68,9 @@ def move_audiobooks(source_dir, dest_dir, dry_run=False):
         book_folder = dest_path / book_name
         destination_file = book_folder / m4b_file.name
         
-        print(f"📚 {m4b_file.name}")
-        print(f"   → Creating folder: {book_folder}")
-        print(f"   → Moving to: {destination_file}")
+        log(f"📚 {m4b_file.name}", log_path)
+        log(f"   → Creating folder: {book_folder}", log_path)
+        log(f"   → Moving to: {destination_file}", log_path)
         
         if not dry_run:
             try:
@@ -64,32 +79,40 @@ def move_audiobooks(source_dir, dest_dir, dry_run=False):
                 
                 # Move the file
                 shutil.move(str(m4b_file), str(destination_file))
-                print(f"   ✅ Successfully moved!\n")
+                log(f"   ✅ Successfully moved!", log_path)
+                log("", log_path)
                 
             except Exception as e:
-                print(f"   ❌ Error moving file: {e}\n")
+                log(f"   ❌ Error moving file: {e}", log_path)
+                log("", log_path)
         else:
-            print(f"   [DRY RUN - no changes made]\n")
+            log(f"   [DRY RUN - no changes made]", log_path)
+            log("", log_path)
     
     if dry_run:
-        print("\n⚠️  This was a dry run. Set dry_run=False to actually move files.")
+        log("⚠️  This was a dry run. Set dry_run=False to actually move files.", log_path)
 
 def main():
-    print("=" * 60)
-    print("LibroFM to Plex Audiobook Mover")
-    print("=" * 60)
-    print(f"\nSource: {SOURCE_FOLDER}")
-    print(f"Destination: {PLEX_DESTINATION}\n")
+    log_path = Path(LOG_FILENAME)
+    
+    log("=" * 60, log_path)
+    log("LibroFM to Plex Audiobook Mover", log_path)
+    log("=" * 60, log_path)
+    log(f"Source: {SOURCE_FOLDER}", log_path)
+    log(f"Destination: {PLEX_DESTINATION}", log_path)
+    log(f"Log file: {log_path}", log_path)
+    log("", log_path)
     
     # Set to True to test without moving files
     DRY_RUN = True
     
     if DRY_RUN:
-        print("🔍 Running in DRY RUN mode (no files will be moved)\n")
+        log("🔍 Running in DRY RUN mode (no files will be moved)", log_path)
+        log("", log_path)
     
-    move_audiobooks(SOURCE_FOLDER, PLEX_DESTINATION, dry_run=DRY_RUN)
+    move_audiobooks(SOURCE_FOLDER, PLEX_DESTINATION, log_path, dry_run=DRY_RUN)
     
-    print("\n" + "=" * 60)
+    log("=" * 60, log_path)
 
 if __name__ == "__main__":
     main()
